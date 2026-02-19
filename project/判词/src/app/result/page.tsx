@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo } from "react";
+import { Suspense, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 
 import { ErrorNotice } from "@/components/ErrorNotice";
@@ -10,7 +10,7 @@ import { ResultCard } from "@/components/ResultCard";
 import { generateFortuneSafe } from "@/lib/fortune/engine";
 import { validateFortuneRequest } from "@/lib/fortune/validate";
 
-export default function ResultPage() {
+function ResultPageContent() {
   const searchParams = useSearchParams();
 
   const name = searchParams.get("name")?.trim() ?? "";
@@ -58,5 +58,21 @@ export default function ResultPage() {
         <ResultActions result={result} />
       </div>
     </main>
+  );
+}
+
+export default function ResultPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="min-h-screen flex items-center justify-center px-4 py-12">
+          <section className="lov-empty-card animate-fade-in-up">
+            <p>正在生成判词...</p>
+          </section>
+        </main>
+      }
+    >
+      <ResultPageContent />
+    </Suspense>
   );
 }
