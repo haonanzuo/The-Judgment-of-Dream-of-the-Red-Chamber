@@ -430,11 +430,15 @@ button {
 .lov-form-fields {
   display: grid;
   gap: 20px;
+  width: 100%;
+  min-width: 0;
 }
 
 .lov-field {
   display: grid;
   gap: 7px;
+  width: 100%;
+  min-width: 0;
 }
 
 .lov-label {
@@ -444,7 +448,11 @@ button {
 }
 
 .lov-input {
+  display: block;
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  inline-size: 100%;
   border: 1px solid #c8b292;
   border-radius: 0;
   padding: 11px 12px;
@@ -465,6 +473,8 @@ button {
 
 .lov-input-date {
   min-height: 44px;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 .lov-submit {
@@ -726,4 +736,12 @@ button {
   background: #d7cdc1;
   border-color: #c6b8a4;
   color: #82715f;
+}
+
+@media (max-width: 640px) {
+  input[type="date"].lov-input-date {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
 }
