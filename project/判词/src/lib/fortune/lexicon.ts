@@ -58,6 +58,6 @@ export const INTERPRETATION_LEXICON = {
 } as const;
 
 export const getRhymeGroupId = (char: string): string | null => {
-  const hit = RHYME_GROUPS.find((group) => group.chars.includes(char));
+  const hit = RHYME_GROUPS.find((group) => group.chars.some((candidate) => candidate === char));
   return hit?.id ?? null;
 };

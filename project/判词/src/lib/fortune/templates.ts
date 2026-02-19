@@ -21,7 +21,7 @@ const isFiveChar = (line: string): boolean => {
   return Array.from(line).length === 5;
 };
 
-const nextDifferentChar = (pool: readonly string[], current: string): string => {
+const nextDifferentChar = <T extends string>(pool: readonly T[], current: T): T => {
   const idx = pool.indexOf(current);
   if (idx < 0) {
     return pool[0];

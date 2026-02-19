@@ -13,7 +13,34 @@ import type {
   FortuneResponse
 } from "@/lib/fortune/types";
 
-const fortuneLibrary = fortuneData as FortuneLibrary;
+const toFixedFourTuple = (
+  value: string[],
+  fieldName: "poem" | "endings",
+  fortuneId: string
+): [string, string, string, string] => {
+  if (value.length !== 4) {
+    throw new Error(`${fieldName} for ${fortuneId} must contain exactly 4 items`);
+  }
+
+  return [value[0], value[1], value[2], value[3]];
+};
+
+const buildFortuneLibrary = (): FortuneLibrary => {
+  return {
+    meta: {
+      generatedAt: fortuneData.meta.generatedAt,
+      count: fortuneData.meta.count,
+      source: fortuneData.meta.source
+    },
+    fortunes: fortuneData.fortunes.map((entry) => ({
+      ...entry,
+      poem: toFixedFourTuple(entry.poem, "poem", entry.id),
+      endings: toFixedFourTuple(entry.endings, "endings", entry.id)
+    }))
+  };
+};
+
+const fortuneLibrary = buildFortuneLibrary();
 
 const fnv1a = (value: string): number => {
   let hash = 0x811c9dc5;
